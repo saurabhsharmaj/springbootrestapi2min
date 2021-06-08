@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +23,10 @@ public class StudentResource {
 	@Autowired
 	private StudentRepository studentRepository;
 
+	//http://localhost:8080/students?page=1&size=1
 	@GetMapping("/students")
-	public List<Student> retrieveAllStudents() {
-		return studentRepository.findAll();
+	public Page<Student> retrieveAllStudents(Pageable pageable) {
+		return (Page<Student>)studentRepository.findAll(pageable);
 	}
 
 	@GetMapping("/students/{id}")
